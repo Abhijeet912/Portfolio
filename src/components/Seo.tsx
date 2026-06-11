@@ -1,4 +1,4 @@
-const SITE_URL = "https://abhijeetanand.online";
+const SITE_URL = "https://www.abhijeetanand.online";
 
 interface SeoProps {
   title: string;

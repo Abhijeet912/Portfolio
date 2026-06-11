@@ -31,17 +31,36 @@ export default async function handler(req, res) {
   }
 
   const html = `<!doctype html>
-<html><body><script>
+<html><body>
+<p id="status" style="font-family:sans-serif">Completing login…</p>
+<script>
   (function () {
-    function receiveMessage(e) {
-      window.opener.postMessage(${JSON.stringify(payload)}, e.origin);
-      window.removeEventListener("message", receiveMessage, false);
+    var payload = ${JSON.stringify(payload)};
+    var status = document.getElementById("status");
+    if (!window.opener) {
+      status.textContent =
+        "Could not reach the CMS window (the popup lost its opener). " +
+        "Close this window and try logging in again.";
+      return;
     }
-    window.addEventListener("message", receiveMessage, false);
+    // Step 1: announce ourselves. The CMS replies by echoing the exact
+    // string "authorizing:github" from its own origin.
+    // Step 2: send the token to that origin. Keep the listener alive and
+    // ignore unrelated messages (browser extensions are chatty).
+    window.addEventListener(
+      "message",
+      function (e) {
+        if (e.data !== "authorizing:github") return;
+        console.log("Decap handshake from", e.origin);
+        window.opener.postMessage(payload, e.origin);
+        status.textContent = "Login complete — this window will close.";
+      },
+      false
+    );
     window.opener.postMessage("authorizing:github", "*");
+    status.textContent = "Authorized. Finishing handshake…";
   })();
 </script>
-<p style="font-family:sans-serif">Authorized. You can close this window.</p>
 </body></html>`;
 
   res.setHeader("Content-Type", "text/html");

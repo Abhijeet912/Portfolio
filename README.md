@@ -49,8 +49,14 @@ Uploaded media goes to `public/uploads/`.
 The CMS authenticates with GitHub OAuth via the serverless functions in `/api`.
 
 1. Create a **GitHub OAuth App**: GitHub → Settings → Developer settings → OAuth Apps → New.
-   - Homepage URL: `https://abhijeetanand.online`
-   - Authorization callback URL: `https://abhijeetanand.online/api/callback`
+   - Homepage URL: `https://www.abhijeetanand.online`
+   - Authorization callback URL: `https://www.abhijeetanand.online/api/callback`
+
+   > ⚠️ The host here must be the **primary** domain in Vercel (currently
+   > `www.abhijeetanand.online` — the bare domain 308-redirects to it) and must
+   > match `base_url` in `public/admin/config.yml`. If the popup gets redirected
+   > to a different host mid-flow, Decap's origin check silently rejects the
+   > token and login hangs on the login screen.
 2. In Vercel → Project → Settings → Environment Variables, add:
    - `OAUTH_GITHUB_CLIENT_ID` — the OAuth app's client ID
    - `OAUTH_GITHUB_CLIENT_SECRET` — the OAuth app's client secret
@@ -58,7 +64,8 @@ The CMS authenticates with GitHub OAuth via the serverless functions in `/api`.
 
 > Testing on the temporary `*.vercel.app` domain first? Set `base_url` in
 > `public/admin/config.yml` (and the OAuth app callback) to that URL, then switch
-> both to the custom domain when it's live.
+> both to the custom domain when it's live. The same rule applies if you ever
+> swap the primary domain between `www` and the bare domain.
 
 ### Contact form (one-time activation)
 

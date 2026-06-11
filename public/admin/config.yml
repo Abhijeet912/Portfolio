@@ -5,7 +5,7 @@ backend:
   name: github
   repo: Abhijeet912/Portfolio # owner/repo — update if the repo is renamed
   branch: main
-  base_url: https://abhijeetanand.online # site origin that hosts /api/auth (Vercel OAuth functions)
+  base_url: https://www.abhijeetanand.online # site origin that hosts /api/auth (Vercel OAuth functions)
   auth_endpoint: api/auth
   commit_messages:
     create: "content: create {{collection}} “{{slug}}”"
@@ -17,9 +17,9 @@ backend:
 # Enables editing at http://localhost:5173/admin while running `npm run cms` (npx decap-server)
 local_backend: true
 
-site_url: https://abhijeetanand.online
-display_url: https://abhijeetanand.online
-logo_url: https://abhijeetanand.online/favicon.svg
+site_url: https://www.abhijeetanand.online
+display_url: https://www.abhijeetanand.online
+logo_url: https://www.abhijeetanand.online/favicon.svg
 
 media_folder: "public/uploads"
 public_folder: "/uploads"
