@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://abhijeetanand.online/</loc><priority>1.0</priority></url>
+  <url><loc>https://abhijeetanand.online/about</loc><priority>0.9</priority></url>
+  <url><loc>https://abhijeetanand.online/projects</loc><priority>0.9</priority></url>
+  <url><loc>https://abhijeetanand.online/skills</loc><priority>0.8</priority></url>
+  <url><loc>https://abhijeetanand.online/experience</loc><priority>0.8</priority></url>
+  <url><loc>https://abhijeetanand.online/certifications</loc><priority>0.7</priority></url>
+  <url><loc>https://abhijeetanand.online/blog</loc><priority>0.8</priority></url>
+  <url><loc>https://abhijeetanand.online/contact</loc><priority>0.8</priority></url>
+</urlset>

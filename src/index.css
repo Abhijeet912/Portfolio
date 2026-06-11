@@ -1,0 +1,209 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Midnight palette */
+  --color-night-800: #11172a;
+  --color-night-900: #0a0e1c;
+  --color-night-950: #05070d;
+  --color-haze-100: #e8edf6;
+  --color-haze-300: #a9b3c6;
+  --color-haze-500: #6e7a90;
+  --color-neon-cyan: #22d3ee;
+  --color-neon-violet: #8b5cf6;
+  --color-neon-pink: #f472b6;
+  --color-neon-emerald: #34d399;
+
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-spin-slower: spin 14s linear infinite;
+  --animate-pulse-soft: pulse-soft 4.5s ease-in-out infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-14px);
+    }
+  }
+  @keyframes pulse-soft {
+    0%,
+    100% {
+      opacity: 0.45;
+    }
+    50% {
+      opacity: 0.9;
+    }
+  }
+}
+
+/* ---------- Base ---------- */
+html {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-night-950 font-sans text-haze-300 antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  @apply bg-neon-cyan/30 text-white;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #05070d;
+}
+::-webkit-scrollbar-thumb {
+  background: #1c2438;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2a3550;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-neon-cyan);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- Custom utilities ---------- */
+@utility glass {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+@utility gradient-text {
+  background: linear-gradient(92deg, #22d3ee 0%, #8b5cf6 55%, #f472b6 110%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility gradient-border {
+  position: relative;
+  background:
+    linear-gradient(#0a0e1c, #0a0e1c) padding-box,
+    linear-gradient(120deg, rgba(34, 211, 238, 0.7), rgba(139, 92, 246, 0.7), rgba(244, 114, 182, 0.5)) border-box;
+  border: 1px solid transparent;
+}
+
+@utility bg-grid {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, black 35%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, black 35%, transparent 75%);
+}
+
+@utility text-glow {
+  text-shadow: 0 0 28px rgba(34, 211, 238, 0.45);
+}
+
+/* ---------- Blog prose (hand-rolled, no plugin) ---------- */
+.prose-portfolio {
+  font-size: 1.0375rem;
+  line-height: 1.8;
+  color: var(--color-haze-300);
+}
+.prose-portfolio :where(h2) {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-haze-100);
+  margin: 2.2em 0 0.7em;
+}
+.prose-portfolio :where(h3) {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-haze-100);
+  margin: 1.8em 0 0.6em;
+}
+.prose-portfolio :where(p) {
+  margin: 1.1em 0;
+}
+.prose-portfolio :where(strong) {
+  color: var(--color-haze-100);
+  font-weight: 600;
+}
+.prose-portfolio :where(a) {
+  color: var(--color-neon-cyan);
+  text-decoration: none;
+}
+.prose-portfolio :where(a):hover {
+  text-decoration: underline;
+}
+.prose-portfolio :where(ul, ol) {
+  margin: 1.1em 0;
+  padding-left: 1.4em;
+}
+.prose-portfolio :where(ul) {
+  list-style: disc;
+}
+.prose-portfolio :where(ol) {
+  list-style: decimal;
+}
+.prose-portfolio :where(li) {
+  margin: 0.45em 0;
+}
+.prose-portfolio :where(li)::marker {
+  color: var(--color-neon-violet);
+}
+.prose-portfolio :where(code):not(pre code) {
+  background: var(--color-night-800);
+  color: var(--color-neon-cyan);
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 0.15em 0.4em;
+  border-radius: 6px;
+}
+.prose-portfolio :where(pre) {
+  background: var(--color-night-900);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  padding: 1.1em 1.3em;
+  overflow-x: auto;
+  margin: 1.4em 0;
+}
+.prose-portfolio :where(pre code) {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  color: var(--color-haze-100);
+}
+.prose-portfolio :where(blockquote) {
+  border-left: 3px solid var(--color-neon-violet);
+  padding-left: 1.1em;
+  margin: 1.4em 0;
+  color: var(--color-haze-500);
+  font-style: italic;
+}
+.prose-portfolio :where(img) {
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 1.6em 0;
+}
+.prose-portfolio :where(hr) {
+  border-color: rgba(255, 255, 255, 0.08);
+  margin: 2.4em 0;
+}

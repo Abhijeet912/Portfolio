@@ -1,0 +1,142 @@
+# Decap CMS configuration
+# Docs: https://decapcms.org/docs/configuration-options/
+
+backend:
+  name: github
+  repo: Abhijeet912/Portfolio # owner/repo — update if the repo is renamed
+  branch: main
+  base_url: https://abhijeetanand.online # site origin that hosts /api/auth (Vercel OAuth functions)
+  auth_endpoint: api/auth
+  commit_messages:
+    create: "content: create {{collection}} “{{slug}}”"
+    update: "content: update {{collection}} “{{slug}}”"
+    delete: "content: delete {{collection}} “{{slug}}”"
+    uploadMedia: "content: upload “{{path}}”"
+    deleteMedia: "content: remove “{{path}}”"
+
+# Enables editing at http://localhost:5173/admin while running `npm run cms` (npx decap-server)
+local_backend: true
+
+site_url: https://abhijeetanand.online
+display_url: https://abhijeetanand.online
+logo_url: https://abhijeetanand.online/favicon.svg
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: settings
+    label: "⚙️ Site Settings"
+    files:
+      - name: site
+        label: "Profile & Site"
+        file: "content/settings/site.yml"
+        fields:
+          - { name: name, label: Name, widget: string }
+          - { name: role, label: "Current Role", widget: string }
+          - { name: tagline, label: Tagline, widget: string }
+          - name: typewriter
+            label: "Typewriter Phrases (hero)"
+            widget: list
+            field: { name: phrase, label: Phrase, widget: string }
+          - { name: bio, label: "Short Bio (hero/footer)", widget: text }
+          - { name: about, label: "About Page Biography", widget: text }
+          - { name: email, label: Email, widget: string }
+          - { name: profileImage, label: "Profile Photo", widget: image, required: false }
+          - { name: resumeUrl, label: "Resume Link", widget: string, required: false, hint: "Upload your resume in the media library, then paste its path here (e.g. /uploads/resume.pdf)" }
+          - { name: github, label: "GitHub URL", widget: string }
+          - { name: linkedin, label: "LinkedIn URL", widget: string }
+          - { name: leetcode, label: "LeetCode URL", widget: string, required: false }
+
+  - name: projects
+    label: "🚀 Projects"
+    folder: "content/projects"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{status}}"
+    sortable_fields: [date, title]
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: date, label: Date, widget: datetime, format: "YYYY-MM-DD", time_format: false }
+      - name: status
+        label: Status
+        widget: select
+        options:
+          - { label: "Ongoing", value: ongoing }
+          - { label: "Completed", value: completed }
+          - { label: "Deployed & Maintained", value: deployed }
+        default: ongoing
+      - { name: featured, label: "Featured on Home", widget: boolean, default: false }
+      - { name: image, label: "Cover Image", widget: image, required: false }
+      - name: techStack
+        label: "Tech Stack"
+        widget: list
+        field: { name: tech, label: Technology, widget: string }
+      - { name: githubUrl, label: "GitHub URL", widget: string, required: false }
+      - { name: liveUrl, label: "Live URL", widget: string, required: false }
+      - { name: description, label: "Short Description", widget: text }
+      - { name: body, label: "Details (Markdown)", widget: markdown, required: false }
+
+  - name: blogs
+    label: "✍️ Blog Posts"
+    folder: "content/blogs"
+    create: true
+    slug: "{{slug}}"
+    sortable_fields: [publishedDate, title]
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: publishedDate, label: "Published Date", widget: datetime, format: "YYYY-MM-DD", time_format: false }
+      - { name: summary, label: Summary, widget: text }
+      - { name: coverImage, label: "Cover Image", widget: image, required: false }
+      - name: tags
+        label: Tags
+        widget: list
+        required: false
+        field: { name: tag, label: Tag, widget: string }
+      - { name: draft, label: Draft, widget: boolean, default: false, hint: "Drafts are hidden from the live site" }
+      - { name: body, label: "Content (Markdown)", widget: markdown }
+
+  - name: experience
+    label: "💼 Experience"
+    folder: "content/experience"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{role}} @ {{company}}"
+    fields:
+      - { name: company, label: Company, widget: string }
+      - { name: role, label: Role, widget: string }
+      - { name: duration, label: Duration, widget: string, hint: "e.g. Apr 2025 — Present" }
+      - { name: order, label: "Sort Order (1 = most recent)", widget: number, default: 1 }
+      - { name: description, label: Description, widget: text }
+      - name: highlights
+        label: Highlights
+        widget: list
+        required: false
+        field: { name: highlight, label: Highlight, widget: string }
+
+  - name: skills
+    label: "🧠 Skills"
+    folder: "content/skills"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{category}}"
+    fields:
+      - { name: category, label: Category, widget: string }
+      - { name: order, label: "Sort Order", widget: number, default: 1 }
+      - name: skills
+        label: Skills
+        widget: list
+        field: { name: skill, label: Skill, widget: string }
+
+  - name: certifications
+    label: "📜 Certifications"
+    folder: "content/certifications"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{issuer}}"
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: issuer, label: Issuer, widget: string }
+      - { name: date, label: "Issued Date", widget: datetime, format: "YYYY-MM-DD", time_format: false }
+      - { name: credentialUrl, label: "Credential URL", widget: string, required: false }
+      - { name: image, label: "Badge / Image", widget: image, required: false }
