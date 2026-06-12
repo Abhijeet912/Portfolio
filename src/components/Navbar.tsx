@@ -37,12 +37,24 @@ export default function Navbar() {
   }, [open]);
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? "border-b border-white/6 bg-night-950/80 backdrop-blur-xl" : "bg-transparent"
-      }`}
-    >
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8" aria-label="Main">
+    /*
+     * NOTE: the header itself must never get `backdrop-filter`, `filter` or
+     * `transform` — those create a containing block, which would make the
+     * fixed-position mobile menu position against the 64px header instead of
+     * the viewport (menu background collapses, links overlap page content).
+     * The blur lives on the inner bar div, a sibling of the menu.
+     */
+    <header className="fixed inset-x-0 top-0 z-50">
+      <div
+        className={`transition-all duration-300 ${
+          open
+            ? "border-b border-white/6 bg-night-950"
+            : scrolled
+              ? "border-b border-white/6 bg-night-950/80 backdrop-blur-xl"
+              : "bg-transparent"
+        }`}
+      >
+        <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8" aria-label="Main">
         <Link to="/" className="group flex items-center gap-2.5 font-display text-lg font-bold text-haze-100">
           <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-neon-cyan/30 bg-night-900 font-mono text-sm text-neon-cyan transition-shadow group-hover:shadow-[0_0_18px_rgba(34,211,238,0.4)]">
             AA
@@ -100,9 +112,10 @@ export default function Navbar() {
         >
           {open ? <XIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
         </button>
-      </nav>
+        </nav>
+      </div>
 
-      {/* Mobile fullscreen menu */}
+      {/* Mobile fullscreen menu — solid panel, sibling of the blurred bar */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -110,7 +123,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 top-16 z-40 flex flex-col bg-night-950/97 backdrop-blur-2xl lg:hidden"
+            className="fixed inset-0 top-16 z-40 flex flex-col overflow-y-auto bg-night-950 lg:hidden"
           >
             <motion.ul
               initial="hidden"
