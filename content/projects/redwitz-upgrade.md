@@ -1,6 +1,6 @@
 ---
 title: Redwitz Upgrade
-date: 2025-09-01
+date: 2025-12-01
 status: completed
 featured: false
 image: ""
@@ -10,9 +10,8 @@ techStack:
   - Backup & Recovery
 githubUrl: ""
 liveUrl: ""
-description: >-
-  Enterprise TCS project covering SAP system monitoring on Azure, data
-  compliance for India operations and West Europe server management.
+description: Enterprise TCS project covering SAP system monitoring on Azure,
+  data compliance for India operations and West Europe server management.
 ---
 
 An enterprise engagement delivered at Tata Consultancy Services:
